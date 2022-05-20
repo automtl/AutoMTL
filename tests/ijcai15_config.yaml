@@ -1,0 +1,82 @@
+# Builtin Configurations
+dataset: IJCAI15
+dataset_path: /data/datasets/ijcai15/
+field_separator: ','
+user_id_field: 'user_id'
+item_id_field: 'item_id'
+label_field: ['purchase', 'favourite']
+dataset_order: 'RO'
+dataset_split:
+  split_mode: RS
+  splits: [7, 1, 2]
+save_dataset: True
+
+use_gpu: True
+device: 'cuda:0'
+
+checkpoint_dir: checkpoints  # relative path
+log_dir: logs
+
+# -------------- model config ----------------
+model: AutoMTL
+expert_num: 8
+
+embedding_dim: 16
+task_num: 2
+criterions: [bce, bce]
+task_weights: [0.5, 0.5]
+tower_layers: [128, 64]
+
+
+# ----------------- architecture search -----------------------
+need_research: True
+search_epochs: 15
+arch_learning_rate: 1.e-3
+arch_weight_decay: 1.e-6
+unrolled: False
+arch_early_stopping_step: 10
+
+use_bn: True
+dropout: 0.1
+drop_path: 0.0
+
+# ----------------- aggregation params -----------------------
+chosen_experts: 6
+auxiliary_loss_weight: 1.0
+aggregation_learning_rate: 1.e-3
+aggregation_weight_decay: 3.0e-4  #1.e-6
+
+
+# ----------------- supernet ----------------------
+supernet_learning_rate: 0.02 # 0.01
+supernet_momentum: 0.9
+supernet_weight_decay: 3.0e-4
+supernet_sgd_lr_min: 0.0  #1.e-4
+expert_layer_num: 3
+
+# ----------------- re-train ------------------
+train_batch_size: 1024
+max_epochs: 50
+optimizer: adam
+# learning_hyparams:
+learning_rate: 1.0e-3
+weight_decay: 1.0e-4
+eval_step: 1
+early_stopping_step: 5  # early stop steps
+clip_grad_norm: 5.0
+
+# ---------------- validate --------------------
+valid_metrics: [auc, auc]
+eval_batch_size: 2048
+
+
+---
+# Config description for each option
+bottom_layers: "bottom mlp layers setting"
+expert_num: "expert number"
+
+---
+# Config choices for each option
+dataset_order: ['RO', 'TO', None]  # `RO` means shuffle when preprocess, `TO` mean sorted by time
+split_mode: ['RS', 'LS'] # RS - Random split / LS - Leave one out
+split_which: ['train', 'test'] # split training data or test data to create validation data.
