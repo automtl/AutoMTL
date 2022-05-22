@@ -5,7 +5,7 @@ bottom_archs = {
 
         'InnerProduct', 'OuterProduct',
         'Crossnet-1', 'Crossnet-2', 'Crossnet-3', 'Crossnet-4',
-
+        "MLP-64", "MLP-128", "MLP-256", "MLP-512", "MLP-1024",
         "SelfAttention-1", "SelfAttention-2", "SelfAttention-4", "SelfAttention-8"
     ],
     'block_in_dim': 64,
